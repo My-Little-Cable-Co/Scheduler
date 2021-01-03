@@ -1,0 +1,31 @@
+!!!
+%html
+  %head
+    %title='ProgramGuide'
+    %meta{name: "viewport", content: "width=device-width,initial-scale=1"}
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+
+  %body
+    #application
+      #header
+        .logo
+          = link_to(image_tag('logo.svg'), '/')
+        .title
+          Program Guide/Scheduler
+      #content
+        #channel-selector
+          %ul
+            -# Channel.all().each do |channel|
+            - [].each do |channel|
+              %li
+                .channel
+                  #{channel.number}
+                  #{channel.name}
+            %li
+              .channel="+"
+        #container
+          = yield

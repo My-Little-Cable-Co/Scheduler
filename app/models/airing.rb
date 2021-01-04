@@ -69,7 +69,7 @@ class Airing < ApplicationRecord
   def create_listings
     # Create a year in advance
     ActiveRecord::Base.transaction do
-      Listing.where(airing_id: id, channel_id: channel_id, show_id: show_id).delete_all
+      Listing.where(airing_id: id, channel_id: channel_id, show_id: show_id).where('airdate >= ?', Date.today).delete_all
       recurrence.events.each do |event|
         break if event > (Date.today + 1.year)
         listing = Listing.where(channel_id: channel_id,

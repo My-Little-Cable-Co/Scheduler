@@ -28,9 +28,11 @@ html,body {
 
 #content {
   display: flex;
+  max-height: calc(100vh - 75px);
 }
 
 #container {
   flex-grow: 1;
   margin: 10px;
+  overflow-y: scroll
 }

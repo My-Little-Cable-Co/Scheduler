@@ -1,0 +1,65 @@
+= form_with(model: [airing.channel, airing]) do |form|
+  - if airing.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(airing.errors.count, 'error')} prohibited this airing from being saved:"
+
+      %ul
+        - airing.errors.each do |error|
+          %li= error.full_message
+
+  .field
+    = form.label :show_id
+    = form.select :show_id, Show.order(:title).collect{|show| [show.title, show.id] }, { prompt: '--Pick a Show--', disabled: "" }
+
+  = form.hidden_field :channel_id
+
+  .field
+    = form.label :timeslot
+    = form.select :timeslot, Airing::TIMESLOTS, { prompt: '--Pick a Timeslot--', disabled: "" }
+
+  .field
+    = form.label :usual_block_length_in_minutes
+    = form.select :usual_block_length_in_minutes, Airing::BLOCK_LENGTHS, { prompt: '--Pick a Block Length--', disabled: "" }
+
+  .field
+    %h4 Recurrence Rules
+    .horizontal-checkbox-group
+      .checkbox
+        .checkbox-label
+          Mon
+        = check_box_tag 'airing[recurrence_rules][day_of_week][]', 'monday'
+      .checkbox
+        .checkbox-label
+          Tue
+        = check_box_tag 'airing[recurrence_rules][day_of_week][]', 'tuesday'
+      .checkbox
+        .checkbox-label
+          Wed
+        = check_box_tag 'airing[recurrence_rules][day_of_week][]', 'wednesday'
+      .checkbox
+        .checkbox-label
+          Thu
+        = check_box_tag 'airing[recurrence_rules][day_of_week][]', 'thursday'
+      .checkbox
+        .checkbox-label
+          Fri
+        = check_box_tag 'airing[recurrence_rules][day_of_week][]', 'friday'
+      .checkbox
+        .checkbox-label
+          Sat
+        = check_box_tag 'airing[recurrence_rules][day_of_week][]', 'saturday'
+      .checkbox
+        .checkbox-label
+          Sun
+        = check_box_tag 'airing[recurrence_rules][day_of_week][]', 'sunday'
+
+    = label_tag 'airing[recurrence_rules][starting]' do
+      Starting
+      = date_field_tag 'airing[recurrence_rules][starting]'
+
+    = label_tag 'airing[recurrence_rules][ending]' do
+      Ending
+      = date_field_tag 'airing[recurrence_rules][ending]'
+
+  .actions
+    = form.submit

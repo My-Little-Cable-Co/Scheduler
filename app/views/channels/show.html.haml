@@ -1,0 +1,51 @@
+%p#notice
+  = notice
+
+%h2
+  = @channel.long_name
+  %small= link_to 'Edit', edit_channel_path(@channel)
+
+#channel-display
+  #airings
+    %h4
+      Airings
+      = link_to 'New', new_channel_airing_path(@channel)
+    %table
+      %thead
+        %th Show
+        %th Summary
+        %th
+      %tbody
+        - @channel.airings.each do |airing|
+          %tr
+            %td= airing.show.title
+            %td= airing.summary
+            %td= link_to 'Destroy', channel_airing_path(@channel, airing), method: :delete, data: { confirm: 'Are you sure?' }
+
+  #channel-schedule
+    %table{id: "channel-#{@channel.number}-schedule-week-starting-#{@days[0].strftime('%F')}"}
+      %caption
+        - previous_week_start = (@days[0] - 1.week).strftime('%F')
+        - next_week_start = (@days[0] + 1.week).strftime('%F')
+        - if !@days.include?(Date.today)
+          = link_to('This Week', '?')
+        = link_to('<<', "?start_date='#{previous_week_start}'")
+        = "Week of #{@days[0].strftime('%F')}"
+        = link_to('>>', "?start_date='#{next_week_start}'")
+      %thead
+        %th
+        - @days.each do |day|
+          %th= day.strftime('%a %D')
+      %tbody
+        - Airing::TIMESLOTS.each_with_index do |timeslot, index|
+          %tr.half-hour
+            - color = cycle('green', 'yellow', 'blue', 'red', name: 'colors')
+            %td{class: color}= timeslot
+            - @days.each do |day|
+              - listing = @listings.fetch(day, []).select{|l| l.timeslot == timeslot}[0]
+              - if listing
+                - total_timeslots = @listings.fetch(day, []).select{|l| l.parent_listing_id == listing.id || (listing.parent_listing_id.present? && l.parent_listing_id == listing.parent_listing_id && l.id != listing.id)}.length + 1
+                - if listing.parent_listing_id.nil? || index == 0 # The first timeslot of the day should display even if it is a continuation
+                  %td{class: color, rowspan: total_timeslots}= listing&.display || 'TBD'
+              - else
+                %td{class: color} TBD

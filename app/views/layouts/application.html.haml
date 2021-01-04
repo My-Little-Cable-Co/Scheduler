@@ -16,16 +16,22 @@
           = link_to(image_tag('logo.svg'), '/')
         .title
           Program Guide/Scheduler
+        %ul.navigation
+          %li= link_to('Shows', shows_path)
+          %li= link_to('Commercials', commercials_path)
       #content
         #channel-selector
           %ul
-            -# Channel.all().each do |channel|
-            - [].each do |channel|
+            - Channel.order(:number).each do |channel|
               %li
-                .channel
-                  #{channel.number}
-                  #{channel.name}
+                %a{href: channel_path(channel)}
+                  - channel_selected = params[:channel_id] == channel.id.to_s || (params[:controller] == 'channels' && params[:id] == channel.id.to_s)
+                  .channel{class: channel_selected ? 'active': ''}
+                    %span.number= channel.number
+                    %span.short-name= channel.short_name.upcase
             %li
-              .channel="+"
+              %a{href: new_channel_path}
+                .channel
+                  +
         #container
           = yield

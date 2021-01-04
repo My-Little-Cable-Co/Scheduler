@@ -1,7 +1,9 @@
 #channel-selector
   color: #dadada
   background: #000557
+  min-width: 75px
   width: 75px
+  overflow-y: scroll
 
   ul
     padding: 0
@@ -14,10 +16,26 @@
       border-top: 1px solid #dadada;
       border-bottom: 1px solid #dadada;
 
-      .channel
-        font-size: x-large
+      a:hover
+        color: #fff
+
+      a
         height: 100%
-        display: flex
-        flex-direction: column
-        justify-content: center
-        text-align: center
+        color: #dadada
+        background-color: unset
+        text-decoration: none
+
+        .channel
+          font-size: large
+          height: 100%
+          display: flex
+          flex-direction: column
+          justify-content: center
+          text-align: center
+
+          .number
+            font-size: large
+            margin-bottom: 5px
+
+        .channel.active
+          color: #d4d400

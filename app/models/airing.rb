@@ -32,6 +32,33 @@ class Airing < ApplicationRecord
     '23:00', '23:30',
   ]
 
+  TIMESLOT_EMOJI = {
+    '00:00' => '🕛', '00:30' => '🕧',
+    '01:00' => '🕐', '01:30' => '🕜',
+    '02:00' => '🕑', '02:30' => '🕝',
+    '03:00' => '🕒', '03:30' => '🕞',
+    '04:00' => '🕓', '04:30' => '🕟',
+    '05:00' => '🕔', '05:30' => '🕠',
+    '06:00' => '🕕', '06:30' => '🕡',
+    '07:00' => '🕖', '07:30' => '🕢',
+    '08:00' => '🕗', '08:30' => '🕣',
+    '09:00' => '🕘', '09:30' => '🕤',
+    '10:00' => '🕙', '10:30' => '🕥',
+    '11:00' => '🕚', '11:30' => '🕦',
+    '12:00' => '🕛', '12:30' => '🕛',
+    '13:00' => '🕐', '13:30' => '🕜',
+    '14:00' => '🕑', '14:30' => '🕝',
+    '15:00' => '🕒', '15:30' => '🕞',
+    '16:00' => '🕓', '16:30' => '🕟',
+    '17:00' => '🕔', '17:30' => '🕠',
+    '18:00' => '🕕', '18:30' => '🕡',
+    '19:00' => '🕖', '19:30' => '🕢',
+    '20:00' => '🕗', '20:30' => '🕣',
+    '21:00' => '🕘', '21:30' => '🕤',
+    '22:00' => '🕙', '22:30' => '🕥',
+    '23:00' => '🕚', '23:30' => '🕦',
+  }
+
   BLOCK_LENGTHS = [
     30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480,
     510, 540, 570, 600, 630, 660, 690, 720, 750, 780, 810, 840, 870, 900, 930,
@@ -42,6 +69,20 @@ class Airing < ApplicationRecord
   validates :timeslot, presence: true, inclusion: { in: Airing::TIMESLOTS, message: 'Timeslot must be on a half-hour mark.' }
 
   after_commit :create_listings, on: :create
+
+  def humanized_block_length
+    if usual_block_length_in_minutes
+      if usual_block_length_in_minutes >= 60
+        hours = (usual_block_length_in_minutes.floor / 60)
+        minutes = usual_block_length_in_minutes - usual_block_length_in_minutes.floor
+        "#{hours}h #{minutes}m"
+      else
+        "#{usual_block_length_in_minutes}m"
+      end
+    else
+      "??m"
+    end
+  end
 
   def summary
     if recurrence

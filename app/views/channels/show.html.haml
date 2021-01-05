@@ -14,13 +14,37 @@
       %thead
         %th Show
         %th Summary
-        %th
       %tbody
         - @channel.airings.each do |airing|
-          %tr
+          %tr{class: cycle('even', 'odd')}
             %td= airing.show.title
-            %td= airing.summary
-            %td= link_to 'Destroy', channel_airing_path(@channel, airing), method: :delete, data: { confirm: 'Are you sure?' }
+            %td
+              .airing.summary
+                - if airing.recurrence
+                  - recurrence_info = airing.recurrence.to_h
+                  .days-of-week
+                    %span.day-of-week{class: recurrence_info[:on].include?('monday') ? 'active' : ''} M
+                    &nbsp;
+                    %span.day-of-week{class: recurrence_info[:on].include?('tuesday') ? 'active' : ''} Tu
+                    &nbsp;
+                    %span.day-of-week{class: recurrence_info[:on].include?('wednesday') ? 'active' : ''} W
+                    &nbsp;
+                    %span.day-of-week{class: recurrence_info[:on].include?('thursday') ? 'active' : ''} Th
+                    &nbsp;
+                    %span.day-of-week{class: recurrence_info[:on].include?('friday') ? 'active' : ''} F
+                    &nbsp;
+                    %span.day-of-week{class: recurrence_info[:on].include?('saturday') ? 'active' : ''} Sa
+                    &nbsp;
+                    %span.day-of-week{class: recurrence_info[:on].include?('sunday') ? 'active' : ''} Su
+                  .airtime-info
+                    .timeslot= "#{Airing::TIMESLOT_EMOJI[airing.timeslot]} #{airing.timeslot}"
+                    .runtime= "⏳ #{airing.humanized_block_length}"
+                  .relevancy-dates
+                    %small.starts= recurrence_info.fetch(:starts, Date.new(1900,1,1)).strftime('%F')
+                    %span &nbsp;–&nbsp;
+                    %small.until= recurrence_info.fetch(:until, Date.new(2100,12,31)).strftime('%F')
+                - else
+                  No recurrence data
 
   #channel-schedule
     %table{id: "channel-#{@channel.number}-schedule-week-starting-#{@days[0].strftime('%F')}"}

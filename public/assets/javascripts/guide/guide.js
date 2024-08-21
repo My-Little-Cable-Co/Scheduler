@@ -267,15 +267,6 @@ function channelFromChannelData(channelData) {
       //   time slot
       //   - started in the past, ends on or after the third end time slot
       
-      console.log(contentData.title, ", starting: ", content_start_time, ", ending: ", content_end_time);
-      console.log("Single 1: ", content_end_time.getTime(), ' == ', currentEndTimes[0].getTime());
-      console.log("Result: ", (content_end_time.getTime() == currentEndTimes[0].getTime()));
-      console.log("Single 2: (", content_start_time.getTime(), " == ", currentStartTimes[1].getTime(), " && ", content_end_time.getTime(), " == ", currentEndTimes[1].getTime(), ")");
-      console.log("Result: ", (content_start_time.getTime() == currentStartTimes[1].getTime() && content_end_time.getTime() == currentEndTimes[1].getTime()));
-      console.log("Single 3: (", content_start_time.getTime(), " == ", currentStartTimes[2].getTime(), ")");
-      console.log("Result: ", (content_start_time.getTime() == currentStartTimes[2].getTime()));
-      console.log("Double 1: ", (content_end_time.getTime() == currentEndTimes[1].getTime()));
-      console.log("Double 2: ", (content_start_time.getTime() == currentStartTimes[1].getTime() && content_end_time.getTime() >= currentEndTimes[2].getTime()));
       if (
         (content_end_time.getTime() == currentEndTimes[0].getTime()) ||
         (content_start_time.getTime() == currentStartTimes[1].getTime() && content_end_time.getTime() == currentEndTimes[1].getTime()) ||

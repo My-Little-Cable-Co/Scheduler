@@ -54,10 +54,9 @@ body {
  }
 
 .current-time, .station-identifier {
-  width: 19%;
-  min-width: 19%;
-  max-width: 19%;
-  padding-right: 2px;
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
 }
 
 .lineups {
@@ -82,17 +81,17 @@ body {
 }
 
 /* a third of the timeslot area, but taking into account the 5px of border on each side*/
-.timeslot {
-  width: calc(33.33% - 10px);
+.timeslot, .channel-lineup-item {
+  width: 160px;
 }
 
 /* 2/3rds of the timeslot area */
-.timeslot.double {
-  width: calc(66.66% - 10px);
+.channel-lineup-item.double {
+  width: 320px;
 }
 
-.timeslot.triple {
-  width: calc(100% - 10px);
+.channel-lineup-item.triple {
+  width: 480px;
 }
 
 /* There tends to be some leftover space on the far right. Use it!*/
@@ -158,9 +157,7 @@ body {
   height: 50px;
 }
 
-/* by default, everything takes up a third of the timeslot area, but taking into account the 5px of border on each side*/
 .channel-lineup-item {
-  width: calc(33% - 10px);
   display: flex;
   flex-direction: row;
 }
@@ -168,22 +165,6 @@ body {
 /* all day items take up all slots*/
 .channel-lineup-item.all-day {
   width: 100%;
-}
-
-/* if you have a little left (between 30 min and 59 min), you get two slots */
-.channel-lineup-item.a-little-left {
-  width: calc(66% - 10px);
-}
-
-/* if you're in the first slot and you have >60 minutes left, you get three slots */
-.channel-lineup-item.a-lot-left:first-child {
-  width: 100%;
-}
-
-/* if you're in the last slot, doesn't matter how much time you have left, you get one slot. */
-.channel-lineup-item:nth-child(3), .channel-lineup-item.a-little-left:nth-child(3), .channel-lineup-item.a-lot-left:nth-child(3) {
-  width: calc(33% - 10px);
-  flex-grow: 1;
 }
 
 /* By default, hide the arrows, and also make them big and make them touch when they are arranged vertically (with a <br/>) */

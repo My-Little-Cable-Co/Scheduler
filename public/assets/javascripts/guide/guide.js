@@ -7,7 +7,7 @@ function ready(fn) {
 }
 
 function updateTime() {
-  document.querySelector('.current-time').innerText = (new Date()).toLocaleTimeString('en-US').replace(/ [AP]M/, '');
+  document.querySelector('.current-time').innerHTML = (new Date()).toLocaleTimeString('en-US').replace(/ [AP]M/, '') + "&nbsp;";
   setTimeout(updateTime, 1000);
 }
 

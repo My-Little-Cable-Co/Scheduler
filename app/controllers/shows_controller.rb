@@ -4,7 +4,7 @@ class ShowsController < ApplicationController
   # GET /shows
   # GET /shows.json
   def index
-    @shows = Show.all
+    @shows = Show.all.order(:title)
   end
 
   # GET /shows/1
@@ -58,6 +58,14 @@ class ShowsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to shows_url, notice: 'Show was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  # POST /shows/rescan
+  def rescan
+    Show.rescan_shows
+    respond_to do |format|
+      format.html { redirect_to shows_url, notice: 'Rescan successful' }
     end
   end
 

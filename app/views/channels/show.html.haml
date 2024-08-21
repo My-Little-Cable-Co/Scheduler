@@ -15,7 +15,7 @@
         %th Show
         %th Summary
       %tbody
-        - @channel.airings.each do |airing|
+        - @channel.airings.order(:timeslot).each do |airing|
           %tr{class: cycle('even', 'odd')}
             %td= airing.show.title
             %td

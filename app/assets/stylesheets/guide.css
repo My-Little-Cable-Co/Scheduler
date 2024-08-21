@@ -1,0 +1,215 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 640px;
+  height: 480px;
+  color: #dadada;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  font-family: "PrevueGrid", monospace;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.previews {
+  height: 240px;
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  background-image: linear-gradient(#1F378E, #000557);
+}
+
+.previews .currentPreview .previewMessages {
+  width: 200px;
+  text-align: center;
+}
+
+.guide {
+  height: 240px;
+  background-color: gray;
+  display: flex;
+  flex-direction: column;
+}
+
+.status-bar {
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+.status-bar > div {
+  background-color: #1F378E;
+}
+
+.current-time, .timeslot, .station-identifier, .channel-lineup-item, .announcement {
+  border-top: 5px solid #dadada;
+  border-left: 5px solid #dadada;
+  border-right: 5px solid black;
+  border-bottom: 5px solid black;
+ }
+
+.current-time {
+  text-align: right;
+ }
+
+.current-time, .station-identifier {
+  width: 19%;
+  min-width: 19%;
+  max-width: 19%;
+  padding-right: 2px;
+}
+
+.lineups {
+  flex-grow: 1;
+}
+
+.lineup {
+  height: 210px;
+  /* no visible scrollbars */
+  overflow-y: hidden;
+}
+
+.station-identifier, .timeslots {
+  text-align: center;
+  color: #d4d400;
+}
+
+.timeslots {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+/* a third of the timeslot area, but taking into account the 5px of border on each side*/
+.timeslot {
+  width: calc(33.33% - 10px);
+}
+
+/* 2/3rds of the timeslot area */
+.timeslot.double {
+  width: calc(66.66% - 10px);
+}
+
+.timeslot.triple {
+  width: calc(100% - 10px);
+}
+
+/* There tends to be some leftover space on the far right. Use it!*/
+.timeslot:last-child, .channel-lineup-item:last-child {
+  flex-grow: 1;
+}
+
+.channel {
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+}
+
+.announcement {
+  height: 60px;
+  padding-top: 2px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.announcement.double-height {
+  height: 130px;
+}
+
+.announcement.triple-height {
+  height: 200px;
+}
+
+.announcement .channel-lineup-item {
+  background-color: cadetblue;
+  width: 100%;
+}
+
+.number {
+  margin-top: 10px;
+}
+
+.station-identifier, .channel-lineup, .channel-lineup-item {
+  background-color: #000557;
+}
+
+.channel-lineup-item.movie {
+  background-color: #551112;
+}
+
+.channel-lineup-item.sports {
+  background-color: #5F93B3;
+}
+
+.channel-lineup {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+
+/* By taking up the available space, we ensure that we push any "after arrows" to the far right edge */
+.channel-lineup-item .title {
+  flex-grow: 1;
+  padding-left: 5px;
+  padding-top: 2px;
+  overflow: hidden;
+  height: 50px;
+}
+
+/* by default, everything takes up a third of the timeslot area, but taking into account the 5px of border on each side*/
+.channel-lineup-item {
+  width: calc(33% - 10px);
+  display: flex;
+  flex-direction: row;
+}
+
+/* all day items take up all slots*/
+.channel-lineup-item.all-day {
+  width: 100%;
+}
+
+/* if you have a little left (between 30 min and 59 min), you get two slots */
+.channel-lineup-item.a-little-left {
+  width: calc(66% - 10px);
+}
+
+/* if you're in the first slot and you have >60 minutes left, you get three slots */
+.channel-lineup-item.a-lot-left:first-child {
+  width: 100%;
+}
+
+/* if you're in the last slot, doesn't matter how much time you have left, you get one slot. */
+.channel-lineup-item:nth-child(3), .channel-lineup-item.a-little-left:nth-child(3), .channel-lineup-item.a-lot-left:nth-child(3) {
+  width: calc(33% - 10px);
+  flex-grow: 1;
+}
+
+/* By default, hide the arrows, and also make them big and make them touch when they are arranged vertically (with a <br/>) */
+.before-arrow, .before-double-arrow, .after-arrow, .after-double-arrow {
+  display: none;
+  text-shadow: none;
+  line-height: 32px;
+  font-size: 32px;
+}
+
+/* If you're in the first slot and you started during the previous slot, your single arrow shows */
+.channel-lineup-item.started-a-little-while-ago:first-child .before-arrow {
+  display: block;
+}
+
+/* If you're in the first slot and you started before the previous slot, your double arrow shows */
+.channel-lineup-item.started-a-long-while-ago:first-child .before-double-arrow {
+  display: block;
+}
+
+/* If you're in the last slot and you end in the next slot, your arrow shows */
+.channel-lineup-item.a-little-left:nth-child(3) .after-arrow {
+  display: block;
+}
+
+/* If you end after the fourth slot relative to current, your double arrow shows */
+.channel-lineup-item.a-lot-left .after-double-arrow {
+  display: block;
+}

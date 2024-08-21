@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_04_021016) do
+ActiveRecord::Schema.define(version: 2021_12_29_000102) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "airings", force: :cascade do |t|
@@ -46,6 +47,41 @@ ActiveRecord::Schema.define(version: 2021_01_04_021016) do
     t.index ["title"], name: "index_commercials_on_title", unique: true
   end
 
+  create_table "episodes", force: :cascade do |t|
+    t.bigint "show_id", null: false
+    t.bigint "season_id", null: false
+    t.string "name"
+    t.integer "number"
+    t.string "filepath"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["season_id"], name: "index_episodes_on_season_id"
+    t.index ["show_id"], name: "index_episodes_on_show_id"
+  end
+
+  create_table "good_jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "queue_name"
+    t.integer "priority"
+    t.jsonb "serialized_params"
+    t.datetime "scheduled_at"
+    t.datetime "performed_at"
+    t.datetime "finished_at"
+    t.text "error"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.uuid "active_job_id"
+    t.text "concurrency_key"
+    t.text "cron_key"
+    t.uuid "retried_good_job_id"
+    t.datetime "cron_at"
+    t.index ["active_job_id", "created_at"], name: "index_good_jobs_on_active_job_id_and_created_at"
+    t.index ["concurrency_key"], name: "index_good_jobs_on_concurrency_key_when_unfinished", where: "(finished_at IS NULL)"
+    t.index ["cron_key", "created_at"], name: "index_good_jobs_on_cron_key_and_created_at"
+    t.index ["cron_key", "cron_at"], name: "index_good_jobs_on_cron_key_and_cron_at", unique: true
+    t.index ["queue_name", "scheduled_at"], name: "index_good_jobs_on_queue_name_and_scheduled_at", where: "(finished_at IS NULL)"
+    t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
+  end
+
   create_table "listings", force: :cascade do |t|
     t.bigint "channel_id", null: false
     t.date "airdate", null: false
@@ -62,6 +98,15 @@ ActiveRecord::Schema.define(version: 2021_01_04_021016) do
     t.index ["show_id"], name: "index_listings_on_show_id"
   end
 
+  create_table "seasons", force: :cascade do |t|
+    t.bigint "show_id", null: false
+    t.string "label"
+    t.string "base_dir"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["show_id"], name: "index_seasons_on_show_id"
+  end
+
   create_table "shows", force: :cascade do |t|
     t.string "title"
     t.string "base_dir"
@@ -72,8 +117,11 @@ ActiveRecord::Schema.define(version: 2021_01_04_021016) do
 
   add_foreign_key "airings", "channels"
   add_foreign_key "airings", "shows"
+  add_foreign_key "episodes", "seasons"
+  add_foreign_key "episodes", "shows"
   add_foreign_key "listings", "airings"
   add_foreign_key "listings", "channels"
   add_foreign_key "listings", "listings", column: "parent_listing_id"
   add_foreign_key "listings", "shows"
+  add_foreign_key "seasons", "shows"
 end

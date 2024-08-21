@@ -30,6 +30,8 @@ services:
     volumes:
       - .:/src
       - gem_cache:/bundler_gems
+      - /Volumes/Media/TV Shows:/media/tv:ro
+      - /Volumes/Media/Movies:/media/movies:ro
     depends_on:
       - db
 

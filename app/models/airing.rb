@@ -1,7 +1,7 @@
 class Airing < ApplicationRecord
   belongs_to :show
   belongs_to :channel
-  has_many :listings, dependent: :destroy
+  has_many :listings, dependent: :delete_all
 
   serialize :recurrence, Montrose::Recurrence
 

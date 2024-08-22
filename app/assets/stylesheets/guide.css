@@ -87,7 +87,7 @@ body {
 
 /* 2/3rds of the timeslot area */
 .channel-lineup-item.double {
-  width: 320px;
+  width: 330px;
 }
 
 .channel-lineup-item.triple {
@@ -186,7 +186,7 @@ body {
 }
 
 /* If you're in the last slot and you end in the next slot, your arrow shows */
-.channel-lineup-item.a-little-left:nth-child(3) .after-arrow {
+.channel-lineup-item.a-little-left:last-child .after-arrow {
   display: block;
 }
 

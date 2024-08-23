@@ -293,7 +293,7 @@ function channelFromChannelData(channelData) {
       // Display the single or double right arrow if needed
       if(contentData.minutes_remaining > 60) {
         lineupItem.addClass('a-lot-left');
-      } else if(contentData.minutes_remaining >= 30) {
+      } else if(contentData.minutes_remaining > 30) {
         lineupItem.addClass('a-little-left');
       }
 

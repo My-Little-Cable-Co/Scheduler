@@ -46,6 +46,29 @@ class Schedule
           end
         end.compact,
       }
+      # After creating the channel's lineup, look for empty timeslots and
+      # insert a TBD airing as needed.
+      Airing::TIMESLOTS.each do |timeslot|
+        timeslot_as_time = Time.zone.parse(timeslot)
+        timeslot_is_filled = channel_entry[:lineup].any? do |listing|
+          timeslot_as_time.between?(listing[:start_time], listing[:end_time] - 1.second)
+        end
+
+        unless timeslot_is_filled
+          time_in_past = timeslot_as_time < Time.zone.now
+          filler_airing = {
+              title: "To be announced",
+              start_time: timeslot_as_time,
+              end_time: timeslot_as_time + 30.minutes,
+              all_day: false,
+              minutes_elapsed: time_in_past ? [30, ((timeslot_as_time - Time.zone.now) / 60).round.abs].min : 0,
+              minutes_remaining: 30 - [30, (time_in_past ? ((timeslot_as_time - Time.zone.now) / 60).round.abs : 0)].min,
+              category: 'regular' # reserved for future use
+          }
+          channel_entry[:lineup] << filler_airing
+        end
+      end
+      channel_entry[:lineup].sort!{|a, b| a[:start_time] <=> b[:start_time]}
       schedule[:channels] << channel_entry
     end
 

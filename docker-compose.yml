@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   db:
     environment:
@@ -29,7 +27,6 @@ services:
       - "3000:3000"
     volumes:
       - .:/src
-      - gem_cache:/bundler_gems
       - /Volumes/Media/TV Shows:/media/tv:ro
       - /Volumes/Media/Movies:/media/movies:ro
     depends_on:
@@ -44,20 +41,6 @@ services:
       DATABASE_PASSWORD: abc123program_guide_db_password
       DATABASE_HOST: db
 
-  webpack_dev_server:
-    build: .
-    command: ./bin/webpack-dev-server
-    ports:
-      - 3035:3035
-    volumes:
-      - .:/src
-      - gem_cache:/bundler_gems
-    depends_on:
-      - web
-    environment:
-      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0 
-
 # Declare the volumes that our application uses.
 volumes:
   db_data:
-  gem_cache:

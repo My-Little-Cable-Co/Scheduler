@@ -36,3 +36,6 @@ yarn-debug.log*
 
 .DS_Store
 *.swp
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

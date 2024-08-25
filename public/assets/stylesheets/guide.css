@@ -1,9 +1,17 @@
+:root {
+  --gray: #aaaaaa;
+  --grid-blue: #000055;
+  --status-bar-blue: #223388;
+  --background-blue: #000033;
+  --yellow: #cccc00;
+}
+
 body {
   margin: 0;
   padding: 0;
   width: 640px;
   height: 480px;
-  color: #dadada;
+  color: var(--gray);
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   font-family: "PrevueGrid", monospace;
   font-size: 18px;
@@ -12,12 +20,11 @@ body {
 
 .previews {
   height: 240px;
-  background-color: black;
+  background-color: var(--background-blue);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  background-image: linear-gradient(#1F378E, #000557);
 }
 
 .previews .currentPreview .previewMessages {
@@ -27,8 +34,8 @@ body {
 
 .guide {
   height: 240px;
-  background-color: gray;
   display: flex;
+  background-color: var(--background-blue);
   flex-direction: column;
 }
 
@@ -39,14 +46,14 @@ body {
 }
 
 .status-bar > div {
-  background-color: #1F378E;
+  background-color: var(--status-bar-blue);
 }
 
 .current-time, .timeslot, .station-identifier, .channel-lineup-item, .announcement {
-  border-top: 5px solid #dadada;
-  border-left: 5px solid #dadada;
-  border-right: 5px solid black;
-  border-bottom: 5px solid black;
+  border-top: 5px solid var(--gray);
+  border-left: 5px solid var(--gray);
+  border-right: 5px solid var(--background-blue);
+  border-bottom: 5px solid var(--background-blue);
  }
 
 .current-time {
@@ -71,7 +78,7 @@ body {
 
 .station-identifier, .timeslots {
   text-align: center;
-  color: #d4d400;
+  color: var(--yellow);
 }
 
 .timeslots {
@@ -130,7 +137,7 @@ body {
 }
 
 .station-identifier, .channel-lineup, .channel-lineup-item {
-  background-color: #000557;
+  background-color: var(--grid-blue);
 }
 
 .channel-lineup-item.movie {

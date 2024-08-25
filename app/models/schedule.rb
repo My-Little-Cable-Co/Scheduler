@@ -5,8 +5,10 @@ class Schedule
       channels: []
     }
 
+    # TODO: Opportunity for optimization, as this performs 3 queries per
+    # channel.
     Channel.order(:number).each do |channel|
-      listings = Listing.where(channel: channel, airdate: first_day..last_day).order(:airdate, :timeslot).group_by{|listing| Time.zone.parse("#{listing.airdate} #{listing.timeslot}")}
+      listings = Listing.where(channel: channel, airdate: first_day..last_day).includes(:airing, :show).order(:airdate, :timeslot).group_by{|listing| Time.zone.parse("#{listing.airdate} #{listing.timeslot}")}
       channel_entry = {
         number: channel.number,
         short_name: channel.short_name,

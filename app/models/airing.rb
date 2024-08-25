@@ -3,7 +3,7 @@ class Airing < ApplicationRecord
   belongs_to :channel
   has_many :listings, dependent: :delete_all
 
-  serialize :recurrence, Montrose::Recurrence
+  serialize :recurrence, coder: Montrose::Recurrence
 
   TIMESLOTS = [
     '00:00', '00:30',

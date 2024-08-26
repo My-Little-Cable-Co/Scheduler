@@ -18,7 +18,7 @@ body {
   color: var(--gray);
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   font-family: "PrevueGrid", monospace;
-  font-size: 18px;
+  font-size: 23px;
   line-height: 25px;
   position: absolute;
   left: 40px;

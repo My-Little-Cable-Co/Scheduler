@@ -6,6 +6,10 @@
   --yellow: #cccc00;
 }
 
+html {
+  background-color: var(--background-blue);
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -16,11 +20,12 @@ body {
   font-family: "PrevueGrid", monospace;
   font-size: 18px;
   line-height: 25px;
+  position: absolute;
+  left: 40px;
 }
 
 .previews {
   height: 240px;
-  background-color: var(--background-blue);
   display: flex;
   flex-direction: row;
   align-items: center;

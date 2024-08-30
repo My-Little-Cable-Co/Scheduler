@@ -1,24 +1,9 @@
-# README
+# MyLittleCableCo/Scheduler
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Ruby on Rails application is the heart of a MyLittleCableCo system. It is
+the database of all available TV Shows, Movies, and Commercials, along with
+the scheduling system for each channel. Additionally, it provides the guide
+channel.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+I use docker compose to run this rails application and the postgres database
+it requires.

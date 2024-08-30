@@ -1,5 +1,5 @@
 class ChannelsController < ApplicationController
-  before_action :set_channel, only: [:show, :edit, :update, :destroy]
+  before_action :set_channel, only: [:show, :edit, :update, :destroy, :schedule]
 
   # GET /channels
   # GET /channels.json
@@ -68,10 +68,26 @@ class ChannelsController < ApplicationController
     end
   end
 
+  # GET /channels/ch7/schedule.json
+  def schedule
+    respond_to do |format|
+      format.json {
+        render json: Schedule.for_channel(@channel, Time.zone.now.to_date, Time.zone.now.to_date)
+      }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_channel
-      @channel = Channel.find(params[:id])
+      # /channels/ch7 -> look up by channel number
+      # /channels/7   -> look up by id
+      if params[:id].downcase.starts_with?('ch')
+        channel_number = params[:id].delete("^0-9")
+        @channel = Channel.find_by_number!(channel_number)
+      else
+        @channel = Channel.find(params[:id])
+      end
     end
 
     # Only allow a list of trusted parameters through.

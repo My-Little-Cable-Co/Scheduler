@@ -31,6 +31,7 @@ services:
       - .:/src
       - /Volumes/Media/TV Shows:/media/tv:ro
       - /Volumes/Media/Movies:/media/movies:ro
+      - /Volumes/Media/Videos/Commercials/Individual:/media/commercials:ro
     depends_on:
       - db
 

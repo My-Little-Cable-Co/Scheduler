@@ -4,7 +4,11 @@ class CommercialsController < ApplicationController
   # GET /commercials
   # GET /commercials.json
   def index
-    @commercials = Commercial.all
+    @commercials = Commercial.all.order(:title)
+    respond_to do |format|
+      format.html
+      format.json { render json: @commercials.as_json(only: [:id, :file_path, :duration, :subject]) }
+    end
   end
 
   # GET /commercials/1
@@ -42,7 +46,7 @@ class CommercialsController < ApplicationController
   def update
     respond_to do |format|
       if @commercial.update(commercial_params)
-        format.html { redirect_to @commercial, notice: 'Commercial was successfully updated.' }
+        format.html { redirect_to commercials_url, notice: 'Commercial was successfully updated.' }
         format.json { render :show, status: :ok, location: @commercial }
       else
         format.html { render :edit }
@@ -61,6 +65,14 @@ class CommercialsController < ApplicationController
     end
   end
 
+  # POST /commercials/rescan
+  def rescan
+    RescanCommercialsJob.perform_later
+    respond_to do |format|
+      format.html { redirect_to commercials_url, notice: 'Rescan initiated' }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_commercial
@@ -69,6 +81,6 @@ class CommercialsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def commercial_params
-      params.require(:commercial).permit(:title, :file_path)
+      params.require(:commercial).permit(:title, :file_path, :subject)
     end
 end

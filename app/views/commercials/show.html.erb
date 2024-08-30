@@ -6,8 +6,18 @@
 </p>
 
 <p>
+  <strong>Subject:</strong>
+  <%= @commercial.subject %>
+</p>
+
+<p>
   <strong>File path:</strong>
   <%= @commercial.file_path %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @commercial.duration %>
 </p>
 
 <%= link_to 'Edit', edit_commercial_path(@commercial) %> |

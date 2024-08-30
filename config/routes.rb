@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :commercials
+  resources :commercials do
+    post 'rescan', on: :collection
+  end
   resources :shows do
     post 'rescan', on: :collection
     resources :seasons do
@@ -8,6 +10,7 @@ Rails.application.routes.draw do
   end
   resources :channels do
     resources :airings, except: [:update, :edit, :index]
+    get 'schedule', on: :member
   end
   get 'schedule', to: 'schedule#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

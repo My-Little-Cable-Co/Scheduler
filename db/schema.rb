@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_25_203336) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_27_220456) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -43,6 +43,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_25_203336) do
     t.string "file_path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "duration", precision: 6, scale: 2
+    t.string "subject"
     t.index ["title"], name: "index_commercials_on_title", unique: true
   end
 

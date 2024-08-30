@@ -2,11 +2,14 @@
 
 <h1>Commercials</h1>
 
+<%= button_to "Re-scan", rescan_commercials_path %>
+
 <table>
   <thead>
     <tr>
+      <th>Subject</th>
       <th>Title</th>
-      <th>File path</th>
+      <th>Duration</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,11 +17,12 @@
   <tbody>
     <% @commercials.each do |commercial| %>
       <tr>
+        <td><%= commercial.subject %></td>
         <td><%= commercial.title %></td>
-        <td><%= commercial.file_path %></td>
+        <td><%= commercial.duration %></td>
         <td><%= link_to 'Show', commercial %></td>
         <td><%= link_to 'Edit', edit_commercial_path(commercial) %></td>
-        <td><%= link_to 'Destroy', commercial, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Destroy', commercial, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

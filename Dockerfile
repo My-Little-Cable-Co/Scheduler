@@ -1,5 +1,8 @@
 FROM ruby:3.3.4-bookworm
 
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt update && apt install -y ffmpeg && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /src
 
 COPY Gemfile /src/Gemfile

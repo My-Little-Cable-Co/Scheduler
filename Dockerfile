@@ -14,4 +14,4 @@ COPY . /src
 
 EXPOSE 3000
 
-CMD 'serve.sh'
+CMD '/src/serve.sh'

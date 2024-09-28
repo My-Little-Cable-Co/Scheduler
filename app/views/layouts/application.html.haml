@@ -23,7 +23,7 @@
             - Channel.order(:number).each do |channel|
               %li
                 %a{href: channel_path(channel)}
-                  - channel_selected = params[:channel_id] == channel.id.to_s || (params[:controller] == 'channels' && (params[:id] == channel.id.to_s || (params[:id].downcase.starts_with?("ch") && params[:id].delete("^0-9") == channel.number.to_s)))
+                  - channel_selected = params[:channel_id] == channel.id.to_s || (params[:controller] == 'channels' && params[:id] != nil && (params[:id] == channel.id.to_s || (params[:id].downcase.starts_with?("ch") && params[:id].delete("^0-9") == channel.number.to_s)))
                   .channel{class: channel_selected ? 'active': ''}
                     %span.number= channel.number
                     %span.short-name= channel.short_name.upcase

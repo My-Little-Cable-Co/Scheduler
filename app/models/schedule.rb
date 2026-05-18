@@ -35,7 +35,7 @@ class Schedule
             # randomly pick an episode based on the listing id. This should be
             # removed in favor of airings following sequences (which
             # themselves can be random if desired).
-            file_path: Episode.where(show_id: listing.show_id).order(Arel.sql("hashint8extended(#{listing.id}, #{listing.show_id})")).limit(1).pluck(:filepath).first,
+            file_path: Episode.where(show_id: listing.show_id).order(Arel.sql("hashint8extended(id, #{listing.id})")).limit(1).pluck(:filepath).first,
             start_time: start_time,
             end_time: end_time,
             all_day: listing.airing.usual_block_length_in_minutes.minutes == (24 * 60 * 60) && airtime.to_s.include?('T00:00:00'),

@@ -157,7 +157,8 @@ label {
   background: #000557;
   min-width: 75px;
   width: 75px;
-  overflow-y: scroll; }
+  overflow-y: scroll; 
+  scrollbar-width: none; }
 
   #channel-selector ul {
     padding: 0;
